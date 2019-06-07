@@ -1,28 +1,34 @@
 require('dotenv').config()
-var express = require('express'),
-  mongoose = require('mongoose')
+const express = require('express'),
+  mongoose = require('mongoose'),
+  path = require('path'),
+  bodyParser = require('body-parser'),
+  cors = require('cors')
 
-  
 const dbURI = `${process.env.MONGODB_URI}`
+const publicDir = path.join(__dirname, './public')
+
+const signin = require('./routes/signin')
+
+const app = express()
 
 mongoose.connect(dbURI, { useNewUrlParser: true })
-var db = mongoose.connection
+const db = mongoose.connection
 
 db.on('error', console.error.bind(console, 'DB Connection Error: '))
 db.once('open', () => {
   console.log('DB connected successfully')
 })
-  
-var app = express()
 
-app.set('port', (process.env.PORT || 5000))
+app.use(cors({ credentials: true, origin: '*' }))
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true }))
+app.use(express.static(publicDir))
 
-app.use(express.static(__dirname + '/public'))
+app.use('/api', signin)
 
-app.get('/', (request, response) => {
-  response.send('simple-sentiment-chat')
-})
+app.set('port', process.env.PORT || 5000)
 
 app.listen(app.get('port'), () => {
-  console.log("Node app is running at localhost:" + app.get('port'))
+  console.log('Node app is running at localhost:' + app.get('port'))
 })
