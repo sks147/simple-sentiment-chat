@@ -11,7 +11,7 @@ const signin = require('./routes/signin')
 
 const app = express()
 
-mongoose.connect(dbURI, { useNewUrlParser: true })
+mongoose.connect(dbURI, { useNewUrlParser: true, useFindAndModify: false })
 const db = mongoose.connection
 
 db.on('error', console.error.bind(console, 'DB Connection Error: '))
@@ -25,7 +25,7 @@ app.use(bodyParser.urlencoded({ extended: true }))
 
 app.use('/api', signin)
 
-app.set('port', process.env.PORT || 5000)
+app.set('port', process.env.PORT || 3001)
 
 app.use(express.static(path.resolve(__dirname, './fe/build')))
 
