@@ -29,6 +29,13 @@ app.use('/api', signin)
 
 app.set('port', process.env.PORT || 5000)
 
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static('fe/build'))
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'fe', 'build', 'index.html'))
+  })
+}
+
 app.listen(app.get('port'), () => {
   console.log('Node app is running at localhost:' + app.get('port'))
 })
