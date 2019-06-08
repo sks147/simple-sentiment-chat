@@ -6,7 +6,6 @@ const express = require('express'),
   cors = require('cors')
 
 const dbURI = `${process.env.MONGODB_URI}`
-const publicDir = path.join(__dirname, './public')
 
 const signin = require('./routes/signin')
 
@@ -23,18 +22,12 @@ db.once('open', () => {
 app.use(cors({ credentials: true, origin: '*' }))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
-app.use(express.static(publicDir))
 
 app.use('/api', signin)
 
 app.set('port', process.env.PORT || 5000)
 
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static('fe/build'))
-  app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, 'fe', 'build', 'index.html'))
-  })
-}
+app.use(express.static(path.resolve(__dirname, './fe/build')))
 
 app.listen(app.get('port'), () => {
   console.log('Node app is running at localhost:' + app.get('port'))
