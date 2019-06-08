@@ -18,6 +18,7 @@
     "be": "./node_modules/.bin/nodemon app.js",
     "fe": "cd fe && yarn start",
     "dev": "concurrently \"yarn run be\" \"yarn run fe\"",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false cd fe && yarn install &&  yarn run build",
     "pretty": "./node_modules/.bin/prettier --single-quote --no-semi --write '{,!(node_modules)/**/}*.{js,html}'"
   },
   "dependencies": {
