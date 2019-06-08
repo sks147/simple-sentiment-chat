@@ -50,7 +50,8 @@ class SignUp extends Component {
 
   handleSignUpSubmit = event => {
     event.preventDefault()
-    const address = `process.env.BASE_URL${process.env.port || 5000}/api/signup`
+    const address = `${process.env.BASE_URL}${process.env.port ||
+      5000}/api/signup`
     axios
       .post(
         address,

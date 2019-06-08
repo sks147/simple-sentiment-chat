@@ -44,7 +44,7 @@ class Login extends Component {
     event.preventDefault()
     axios
       .post(
-        `process.env.BASE_URL${process.env.port || 5000}/api/signin`,
+        `${process.env.BASE_URL}${process.env.port || 5000}/api/signin`,
         {
           email: this.state.email,
           password: this.state.password
