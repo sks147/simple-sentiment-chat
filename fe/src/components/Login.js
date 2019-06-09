@@ -42,9 +42,10 @@ class Login extends Component {
 
   handleLoginSubmit = event => {
     event.preventDefault()
+    const address = `/api/signin`
     axios
       .post(
-        `/api/signin`,
+        address,
         {
           email: this.state.email,
           password: this.state.password
@@ -89,6 +90,7 @@ class Login extends Component {
             statusType: 'danger',
             password: ''
           })
+          this.props.history.push('/')
         }
       })
       .catch(e => {

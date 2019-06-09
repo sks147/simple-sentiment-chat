@@ -38,6 +38,7 @@ signin.route('/signin').post((req, res) => {
       return res.send({
         success: true,
         message: 'Successful',
+        name: user.name,
         token: session._id
       })
     })
@@ -101,9 +102,9 @@ signin.route('/logout').get((req, res) => {
     null,
     (err, sessions) => {
       if (err) {
-        return res.send({ message: 'Server Error' })
+        return res.send({ success: false, message: 'Server Error' })
       }
-      return res.send({ message: 'Logged Out!!' })
+      return res.send({ success: true, message: 'Logged Out!!' })
     }
   )
 })

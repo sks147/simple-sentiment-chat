@@ -16,7 +16,7 @@
     "precommit": "lint-staged",
     "start": "node app.js",
     "be": "./node_modules/.bin/nodemon app.js",
-    "fe": "cd fe && yarn build && yarn start",
+    "fe": "cd fe && yarn start",
     "dev": "concurrently \"yarn run be\" \"yarn run fe\"",
     "heroku-postbuild": "cd fe/ && npm install && npm install --only=dev --no-shrinkwrap && npm run build",
     "pretty": "./node_modules/.bin/prettier --single-quote --no-semi --write '{,!(node_modules)/**/}*.{js,html}'"
