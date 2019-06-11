@@ -2,17 +2,20 @@ import React, { Component } from 'react'
 import { withRouter } from 'react-router'
 import '../App.css'
 import {
+  Button,
   Collapse,
   Navbar,
   NavbarToggler,
   NavbarBrand,
+  NavLink,
   Nav,
   UncontrolledDropdown,
   DropdownToggle,
   DropdownMenu,
   DropdownItem
 } from 'reactstrap'
-
+const io = require('socket.io-client')
+const socket = io()
 const axios = require('axios')
 
 class Header extends Component {
@@ -87,11 +90,25 @@ class Header extends Component {
         </a>
       )
     }
+    const adderBtn = (
+      <Button
+        color="primary"
+        onClick={e => {
+          e.stopPropagation()
+          e.nativeEvent.stopImmediatePropagation()
+          socket.emit('increment')
+          console.log(`Plus Clicked and countUpdated`)
+        }}
+      >
+        Plus 1
+      </Button>
+    )
     return (
       <React.Fragment>
         <Navbar color="light" light expand="md">
           <NavbarBrand href="/">reactstrap</NavbarBrand>
           <NavbarToggler onClick={this.toggle} />
+          <NavLink>{adderBtn}</NavLink>
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
               <UncontrolledDropdown nav inNavbar>
@@ -101,7 +118,9 @@ class Header extends Component {
                 <DropdownMenu right>
                   <DropdownItem>{logoutBtn}</DropdownItem>
                   <DropdownItem divider />
-                  <DropdownItem>Option 2</DropdownItem>
+                  <DropdownItem>
+                    <button>Plus 1</button>
+                  </DropdownItem>
                 </DropdownMenu>
               </UncontrolledDropdown>
             </Nav>

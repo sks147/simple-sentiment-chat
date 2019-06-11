@@ -15,8 +15,15 @@ const app = express()
 const server = http.createServer(app)
 const io = socketio(server)
 
-io.on('connection', () => {
+let count = 0
+io.on('connection', socket => {
   console.log('Websocket connection working')
+  socket.emit('countUpdated', count)
+  socket.on('increment', () => {
+    count++
+    io.emit('countUpdated', count)
+    console.log(count)
+  })
 })
 
 mongoose.connect(dbURI, { useNewUrlParser: true, useFindAndModify: false })
